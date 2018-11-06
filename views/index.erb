@@ -2,20 +2,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>guess game</title>
+	<style>
+      body {
+      background: 
+    <%=
+    if message  == "Way too high!"      
+       "red " 
+    elsif message =="Too high!"
+         "#fc5b5b"   	          
+    elsif  message == "Way too low!"    	
+       "blue"    
+    elsif message == "Too low!"
+      	"#9393ff"  
+    elsif message  == "You got it right!"
+        "green"
+    end
+    %>;
+    </style>
+    
 </head>
 <body>
-	<p><%=if message
+	
+    <p>
+    	You have <%= "#{turns}" %> turns left before it resets the number
+    </p>
+
+    <p>
+    <%=if message
 	 " #{message}"
 	end%>
     </p>
+
     <p>   
     	<%=
-         if message  == "You got it right!"
-    	"The SECRET NUMBER is #{number}"
+         if message  == "You got it right!"  or cheat
+    	"The SECRET NUMBER is #{number}, enter  'restart' to start again"
          end 
         %>
     </p>
+
     <form>
     	<input type="text" name="guess">
     	<input type="submit" value="Guess!">
