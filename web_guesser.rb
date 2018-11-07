@@ -1,6 +1,33 @@
 require 'sinatra'
 require 'sinatra/reloader' if development?
 
+get '/' do
+	
+    guess = params["guess"]
+	message = check_guess(guess,SECRET_NUMBER)
+    
+    if @@turns == 0 && message !="You got it right!"
+    number = x.rand(10..100)
+    SECRET_NUMBER = number
+    @@turns=5	
+    end
+
+    if message !="You got it right!"
+	  @@turns-=1
+    end
+
+	if guess == "restart"
+	 number = x.rand(10..100)
+	 SECRET_NUMBER = number
+	 @@turns=5
+   end
+	
+    
+    cheat = params["cheat"]
+
+    erb :index, :locals=>{:number=> number,:message => message,:turns => @@turns,:cheat=>cheat}
+end
+
  x = Random.new
  number= x.rand(10..100)
  
@@ -28,31 +55,4 @@ return message
 end
 
 @@turns=6
-
-get '/' do
-	
-    guess = params["guess"]
-	message = check_guess(guess,SECRET_NUMBER)
-    
-    if @@turns == 0 && message !="You got it right!"
-    number = x.rand(10..100)
-    SECRET_NUMBER = number
-    @@turns=5	
-    end
-
-    if message !="You got it right!"
-	  @@turns-=1
-    end
-
-	if guess == "restart"
-	 number = x.rand(10..100)
-	 SECRET_NUMBER = number
-	 @@turns=5
-   end
-	
-    
-    cheat = params["cheat"]
-
-    erb :index, :locals=>{:number=> number,:message => message,:turns => @@turns,:cheat=>cheat}
-end
 
